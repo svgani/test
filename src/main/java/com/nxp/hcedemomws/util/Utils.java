@@ -183,4 +183,27 @@ public class Utils {
     return restTemplate;
   }
 
+  public <T extends Object> T postRequestWithAbsoluteURL1(Object request, ConfigBean configBean, String requestUrl, Class<T> response) {
+    T resultantObject = null;
+    RestTemplate restTemplate = null;
+    MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+    headers.add("Content-Type", "application/json");
+//    String bearerToken = fetchAccessToken(configBean);
+//    LOG.info("#bearerToken:" + bearerToken);
+//    headers.add("Authorization", "Bearer " + bearerToken);
+    LOG.info("#endpoint url:" + requestUrl);
+    if(requestUrl.startsWith("https")) {
+      restTemplate = buildRestTemplateFactory(true);
+    } else {
+      restTemplate = buildRestTemplateFactory(false);
+    }
+    HttpEntity<String> entity = new HttpEntity<>(JsonUtil.toJSON(request), headers);
+    ResponseEntity<T> response1 = restTemplate.postForEntity(requestUrl, entity, response);
+    if (response1.getStatusCode().is2xxSuccessful()) {
+      LOG.info("#Got Response:" + response1.getBody());
+      resultantObject = response1.getBody();
+    }
+    return resultantObject;
+  }
+
 }

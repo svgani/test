@@ -574,7 +574,7 @@ public class TicketPurchaseController {
         Header[] headers = new Header[] {
           new BasicHeader("content-type", ContentType.APPLICATION_JSON.getMimeType())};
         // generateProductIDResponse = mifareClient.invokePost(request, GenerateProductIDResponse.class, headers);
-        generateProductIDResponse = utils.postRequestWithAbsoluteURL(request, configBean, configBean.getDIGITIZE_BASE_URI() + configBean.getGENERATE_PRODUCT_REFERENCE(),
+        generateProductIDResponse = utils.postRequestWithAbsoluteURL1(request, configBean, configBean.getDIGITIZE_BASE_URI() + configBean.getGENERATE_PRODUCT_REFERENCE(),
           GenerateProductIDResponse.class);
         ticketPurchaseResponse = TicketPurchaseResponse.builder()
           .status(generateProductIDResponse.getResponseContext().getResponseMessage()).ticketId(productRef)
